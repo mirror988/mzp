@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserInfo {
     @GetMapping("/basicInfo")
-    public String getUserInfo(){
+    public String getUserInfo() {
         return null;
     }
 }
