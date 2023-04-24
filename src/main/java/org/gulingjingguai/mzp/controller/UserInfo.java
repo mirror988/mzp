@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserInfo {
     @GetMapping("/basicInfo")
     public String getUserInfo(){
-        return "MiaoZepu";
+        return null;
     }
 }
