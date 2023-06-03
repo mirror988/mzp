@@ -13,6 +13,6 @@ public class UserInfoController {
 
     @GetMapping("/basicInfo")
     public UserInfoBo getUserInfo() {
-        return userInfoBo;
+        return null;
     }
 }
