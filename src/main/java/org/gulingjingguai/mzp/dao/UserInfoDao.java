@@ -5,5 +5,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserInfoDao {
-    UserInfoBo getUserById(int i);
 }
