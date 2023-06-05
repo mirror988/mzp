@@ -84,6 +84,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${plugin.version}</version>
+                <configuration>
+                    <mainClass>org.gulingjingguai.mzp.MzpApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
