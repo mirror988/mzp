@@ -5,7 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 
@@ -21,4 +24,12 @@ class UserInfoControllerTest {
         assertNull(userInfoBo);
     }
 
+    @Test
+    void getSystemTime(){
+        long timestamp = System.currentTimeMillis();
+        Date date = new Date(timestamp);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = dateFormat.format(date);
+        System.out.println(formattedDate);
+    }
 }
