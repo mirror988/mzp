@@ -26,6 +26,7 @@
         <swagger.version>2.7.0</swagger.version>
         <nacos.version>2.1.1</nacos.version>
         <nacos.spring.version>1.1.1</nacos.spring.version>
+        <nacos.boot.version>0.2.12</nacos.boot.version>
     </properties>
 
     <dependencies>
@@ -98,6 +99,12 @@
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-spring-context</artifactId>
             <version>${nacos.spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>nacos-config-spring-boot-starter</artifactId>
+            <version>${nacos.boot.version}</version>
         </dependency>
         <!-- nacos end-->
     </dependencies>

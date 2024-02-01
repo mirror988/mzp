@@ -1,6 +1,5 @@
 package org.gulingjingguai.mzp.dao;
 
-import org.gulingjingguai.mzp.entity.UserInfoBo;
 import org.springframework.stereotype.Repository;
 
 @Repository
