@@ -11,7 +11,7 @@ import java.util.Date;
 @Component
 @EnableScheduling
 public class ScheduledTask {
-    @Scheduled(cron = "01 00 01 ? * 1 *")
+    @Scheduled(cron = "0 0 11-18/2 ? * 1,2,3,4,5")
     void getCronTime(){
         long timestamp = System.currentTimeMillis();
         Date date = new Date(timestamp);

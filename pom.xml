@@ -24,6 +24,8 @@
         <powermock.version>2.0.9</powermock.version>
         <plugin.version>2.5.4</plugin.version>
         <swagger.version>2.7.0</swagger.version>
+        <nacos.version>2.1.1</nacos.version>
+        <nacos.spring.version>1.1.1</nacos.spring.version>
     </properties>
 
     <dependencies>
@@ -84,6 +86,20 @@
             <version>${spring.version}</version>
         </dependency>
         <!-- quatz end-->
+
+        <!-- nacos start-->
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-spring-context</artifactId>
+            <version>${nacos.spring.version}</version>
+        </dependency>
+        <!-- nacos end-->
     </dependencies>
 
     <build>
