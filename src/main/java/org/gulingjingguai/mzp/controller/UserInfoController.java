@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserInfoController {
 
-    @Value("${date}")
+    @Value(value = "${date:}")
     String createDate;
 
     @GetMapping("/basicInfo")
