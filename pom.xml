@@ -22,12 +22,12 @@
         <java.version>1.8</java.version>
         <mockito.version>3.9.0</mockito.version>
         <powermock.version>2.0.9</powermock.version>
-        <plugin.version>2.5.4</plugin.version>
         <swagger.version>2.7.0</swagger.version>
         <nacos.version>2.1.1</nacos.version>
         <nacos.spring.version>1.1.1</nacos.spring.version>
         <nacos.boot.version>0.2.12</nacos.boot.version>
-        <nacos.cloud.version>2.2.1.RELEASE</nacos.cloud.version>
+        <plugin.version>2.5.4</plugin.version>
+        <maven-jar-plugin>3.1.2</maven-jar-plugin>
     </properties>
 
     <dependencies>
@@ -107,24 +107,68 @@
             <artifactId>nacos-config-spring-boot-starter</artifactId>
             <version>${nacos.boot.version}</version>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
-<!--            <version>${nacos.cloud.version}</version>-->
-<!--        </dependency>-->
         <!-- nacos end-->
     </dependencies>
 
     <build>
+        <!-- 指定项目构建后生成最终工件（artifact）的名称 -->
+        <finalName>${project.artifactId}</finalName>
+
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin}</version>
+                <configuration>
+                    <archive>
+                        <!--
+                        这是Java归档文件（例如JAR）中的MANIFEST.MF文件的配置部分。
+                        MANIFEST.MF文件包含了关于归档内容的各种元数据，比如入口点类（对于可执行的JAR非常关键）、实现和依赖库的信息等。
+                         -->
+                        <manifest>
+                            <!-- 当设置为 true 时，Maven会在MANIFEST.MF文件中自动添加默认的实现条目。
+                            这些条目包括项目groupId、artifactId、version以及构建时的classpath元素等信息，它们反映了项目实现的具体版本及构建环境。
+                             -->
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <!-- 如果设置为 true，Maven会添加默认规范条目到MANIFEST.MF中，这通常包含项目所依赖API（即规范或接口）的相关版本信息。 -->
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${plugin.version}</version>
+                <!-- 定义插件或构建过程中某个构建步骤的具体配置信息 -->
                 <configuration>
+                    <!-- 指定Java应用程序（如带有main方法的类）的入口点 -->
                     <mainClass>org.gulingjingguai.mzp.MzpApplication</mainClass>
+                    <!-- 排除所有依赖，依赖包会在assembly plugin统一处理 -->
+                    <includes>
+                        <include>
+                            <!-- 随便写一个不存在的依赖包即可 -->
+                            <groupId>not.exists.groupId</groupId>
+                            <artifactId>not.exists.artifactId</artifactId>
+                        </include>
+                    </includes>
                 </configuration>
+                <!-- 为插件的各个目标定制不同的执行过程
+                     execution子标签代表了对某个插件goal的一个独立配置
+                 -->
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <!-- 对应的插件目标将在该构建阶段自动执行 -->
+                        <phase>package</phase>
+                        <!-- 指定插件要执行的具体任务或动作 -->
+                        <goals>
+                            <goal>build-info</goal>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
