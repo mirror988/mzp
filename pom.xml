@@ -27,7 +27,9 @@
         <nacos.spring.version>1.1.1</nacos.spring.version>
         <nacos.boot.version>0.2.12</nacos.boot.version>
         <plugin.version>2.5.4</plugin.version>
-        <maven-jar-plugin>3.1.2</maven-jar-plugin>
+        <maven.jar.plugin.version>3.1.2</maven.jar.plugin.version>
+        <maven.antrun.plugin.version>3.0.0</maven.antrun.plugin.version>
+        <maven.assembly.plugin.version>3.1.1</maven.assembly.plugin.version>
     </properties>
 
     <dependencies>
@@ -115,10 +117,14 @@
         <finalName>${project.artifactId}</finalName>
 
         <plugins>
+            <!--
+            这个插件用于处理JAR文件的生成。
+            当执行mvn package命令时，它将项目的编译后的类和资源文件打包成一个标准的Java归档（JAR）文件。
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin}</version>
+                <version>${maven.jar.plugin.version}</version>
                 <configuration>
                     <archive>
                         <!--
@@ -135,8 +141,65 @@
                         </manifest>
                     </archive>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>plain-jar</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <!-- 灵活控制构建过程中的资源管理和依赖关系，确保构建行为符合预期，避免不必要的资源处理或解决依赖冲突问题 -->
+                            <excludes>
+                                <exclude>*.properties</exclude>
+                                <exclude>logback-spring.xml</exclude>
+                            </excludes>
+                            <classifier>bootapp</classifier>
+                        </configuration>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
+            <!-- 在Maven构建生命周期中执行Apache Ant任务。Ant是一种Java平台上的构建工具，拥有丰富的任务集来处理各种构建相关的操作，比如文件复制、删除、运行系统命令等
+                 在构建过程中执行自定义的清理、预处理或后处理任务。
+                 复制、移动或修改资源文件。
+                 调用系统命令行工具执行一些特殊操作。
+                 兼容已有的Ant构建流程，逐步过渡到Maven构建体系。
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven.antrun.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>write-classpath</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <!-- Ant任务
+                                 这段配置的作用是在打包阶段生成一个新的或更新现有的JAR文件，并且在该JAR的MANIFEST.MF文件中记录项目的运行时类路径信息。
+                                 这通常用于支持应用启动时加载依赖项或者实现类路径隔离等场景。
+                                -->
+                                <property name="runtime_classpath" refid="maven.runtime.classpath"/>
+                                <jar destfile="${project.build.directory}/${project.artifactId}-bootapp.jar" update="true">
+                                    <manifest>
+                                        <!--suppress UnresolvedMavenProperty -->
+                                        <attribute name="Koca-Thin-Classpath" value="${runtime_classpath}"/>
+                                    </manifest>
+                                </jar>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 主要功能：它是专门为Spring Boot应用设计的插件，用来创建可执行的“胖”JAR（Fat JAR或Uber JAR），包含了应用程序的所有依赖项以及内嵌的Servlet容器（如Tomcat）等组件，使得生成的JAR可以直接通过 java -jar 命令启动运行。
+                 此插件提供了诸如 repackage 目标，它可以重新打包已经由 maven-jar-plugin 或其他类似插件生成的标准JAR，将其转换为Spring Boot可执行的格式。
+                 除此之外，它还支持自定义主类、提供依赖层叠的排除规则等功能，以满足Spring Boot应用的特定需求。
+            -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -162,6 +225,9 @@
                         <id>default</id>
                         <!-- 对应的插件目标将在该构建阶段自动执行 -->
                         <phase>package</phase>
+                        <configuration>
+                            <classifier>bootapp</classifier>
+                        </configuration>
                         <!-- 指定插件要执行的具体任务或动作 -->
                         <goals>
                             <goal>build-info</goal>
@@ -169,6 +235,36 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!--
+                将项目的输出（例如编译后的类文件、资源文件等）与它的依赖项整合到一起，生成一个或多个可分发的归档文件。
+                这些归档文件可以是 ZIP、JAR、TAR、TGZ 等格式，并且可以根据自定义的配置精确控制打包的内容和结构。
+                1.自定义归档结构：允许用户通过编写 Assembly 描述符（通常是 XML 格式的 assembly.xml 文件）来指定包含哪些源代码、资源文件、依赖库以及它们在归档文件内的目录结构。
+                2.合并依赖：特别地，它可以通过 jar-with-dependencies 预定义的描述符将项目的所有依赖包都合并到同一个 JAR 文件中，这样创建出的 JAR 就是一个包含了所有运行时依赖的可执行 JAR。
+                3.多目标支持：支持根据不同的场景或需求，为同一项目创建多种不同类型的归档包。
+                4.简化部署和分发：由于它可以自动化处理依赖关系并按照预设规则构建最终的发布包，因此极大地简化了项目的部署和分发流程。
+                5.模块化构建：对于大型项目或者需要特定模块独立打包的情况，该插件可以用于构建各个模块的完整分发包。
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven.assembly.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptors>
+                        <!-- assembly descriptor 文件，内容见下文-->
+                        <descriptor>src/assembly/assembly_thin.xml</descriptor>
+                    </descriptors>
+                    <outputDirectory>target</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>
