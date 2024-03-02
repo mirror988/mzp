@@ -30,6 +30,7 @@
         <maven.jar.plugin.version>3.1.2</maven.jar.plugin.version>
         <maven.antrun.plugin.version>3.0.0</maven.antrun.plugin.version>
         <maven.assembly.plugin.version>3.1.1</maven.assembly.plugin.version>
+        <koca.boot.thin.layout.version>3.4.0</koca.boot.thin.layout.version>
     </properties>
 
     <dependencies>
@@ -38,13 +39,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-loader</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- unit test start-->
+
+
+            <!-- unit test start-->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -235,6 +244,16 @@
                         </goals>
                     </execution>
                 </executions>
+                <!-- koca-boot-thin-layout: 扩展spring boot maven plugin，重新制定可执行jar包的Launcher类 -->
+                <!-- Launcher类更改为：com.szkingdom.koca.boot.loader.KocaThinJarLauncher -->
+                <!-- 支持按照maven依赖顺序加载外部依赖包 -->
+                <dependencies>
+                    <dependency>
+                        <groupId>com.szkingdom.koca.boot</groupId>
+                        <artifactId>koca-boot-thin-layout</artifactId>
+                        <version>${koca.boot.thin.layout.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <!--

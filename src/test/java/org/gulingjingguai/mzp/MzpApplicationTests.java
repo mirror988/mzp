@@ -34,6 +34,7 @@ class MzpApplicationTests {
     void contextLoads() {
     }
 
+
     @Test
     public ConfigService connectNacos() throws NacosException {
         Properties properties = new Properties();
