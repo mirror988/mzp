@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserService {
-    @Value("${date}")
+    @Value("${date:}")
     String date;
 
     public void getDate() {

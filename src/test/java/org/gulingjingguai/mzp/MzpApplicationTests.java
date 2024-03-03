@@ -15,19 +15,19 @@ import java.util.concurrent.Executor;
 @SpringBootTest
 class MzpApplicationTests {
 
-    @Value("${spring.cloud.nacos.discovery.server-addr:}")
+    @Value("${sdk.server-addr:}")
     String serverAddr;
 
-    @Value("${spring.cloud.nacos.discovery.dataId:}")
+    @Value("${sdk.dataId:}")
     String dataId;
 
-    @Value("${spring.cloud.nacos.discovery.group:}")
+    @Value("${sdk.group:}")
     String group;
 
-    @Value("${spring.cloud.nacos.discovery.username:}")
+    @Value("${sdk.username:}")
     String username;
 
-    @Value("${spring.cloud.nacos.discovery.password:}")
+    @Value("${sdk.password:}")
     String password;
 
     @Test
