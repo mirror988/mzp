@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+
+    <!-- 打包完成后文件名以“-bin”结尾 -->
+    <id>bin</id>
+    <formats>
+        <!-- 压缩格式为tar.gz -->
+        <format>tar.gz</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <!-- 文件拷贝 -->
+    <fileSets>
+        <!-- bin目录: 拷贝运维脚本(Windows) -->
+        <fileSet>
+            <directory>${project.basedir}/src/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <includes>
+                <include>*_thin.bat</include>
+                <include>shutdown.bat</include>
+            </includes>
+            <lineEnding>dos</lineEnding>
+        </fileSet>
+        <!-- bin目录: 拷贝运维脚本(Linux)-->
+        <fileSet>
+            <directory>${project.basedir}/src/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <includes>
+                <include>*_thin.sh</include>
+                <include>shutdown.sh</include>
+            </includes>
+            <lineEnding>unix</lineEnding>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <!-- conf目录: 从编译目录拷贝配置文件 -->
+        <fileSet>
+            <directory>${project.build.directory}/classes</directory>
+            <outputDirectory>conf</outputDirectory>
+            <includes>
+                <!-- 若有漏掉的配置文件，可以在这里添加规则 -->
+                <include>*.properties</include>
+                <include>logback-spring.xml</include>
+            </includes>
+        </fileSet>
+        <!-- lib/bootapp目录: 保存业务jar包，加载jar包时首先从bootapp目录加载 -->
+        <fileSet>
+            <directory>${project.build.directory}</directory>
+            <outputDirectory>lib/bootapp</outputDirectory>
+            <includes>
+                <include>*-bootapp.jar</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+
+    <!-- 依赖包拷贝 -->
+    <dependencySets>
+        <!-- lib/spring目录: 拷贝spring相关的包 -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>lib/spring</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>org.springframework*:*</include>
+            </includes>
+        </dependencySet>
+        <!-- lib/others目录: 拷贝无法归类的包相关的包 -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>lib/others</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}.${artifact.extension}</outputFileNameMapping>
+            <excludes>
+                <exclude>org.springframework*:*</exclude>
+            </excludes>
+        </dependencySet>
+        <!-- 如果还有自定义的分包规则，可以在这里添加 -->
+    </dependencySets>
+</assembly>
