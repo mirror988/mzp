@@ -9,6 +9,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/user")
@@ -18,7 +19,13 @@ public class UserInfoController {
     @Autowired
     private CommonConfig commonConfig;
 
+    @Autowired
+    private RestTemplate restTemplate;
 
+    @GetMapping("/getAnotherService")
+    public String getAnotherService(){
+        return restTemplate.getForObject("http://serviceName/interface",String.class);
+    }
 
     @GetMapping("/basicInfo")
     public UserInfoBo getUserInfo() {
