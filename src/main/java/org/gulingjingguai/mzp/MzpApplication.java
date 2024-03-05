@@ -12,7 +12,7 @@ import java.util.TimeZone;
 @SpringBootApplication
 @Contended
 @EnableScheduling
-@NacosPropertySource(dataId = "m",groupId = "mg",autoRefreshed = true)
+//@NacosPropertySource(dataId = "m",groupId = "mg",autoRefreshed = true)
 public class MzpApplication {
     public static void main(String[] args) {
         SpringApplication.run(MzpApplication.class, args);
