@@ -32,6 +32,8 @@
         <maven.antrun.plugin.version>3.0.0</maven.antrun.plugin.version>
         <maven.assembly.plugin.version>3.1.1</maven.assembly.plugin.version>
         <koca.boot.thin.layout.version>3.4.0</koca.boot.thin.layout.version>
+        <poi.version>3.17</poi.version>
+        <spire.version>5.4.3</spire.version>
     </properties>
 
     <dependencies>
@@ -54,7 +56,7 @@
 
 
 
-            <!-- unit test start-->
+        <!-- unit test start-->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -78,6 +80,7 @@
             <scope>test</scope>
         </dependency>
         <!-- end-->
+
 
         <!--swagger start-->
         <dependency>
@@ -131,13 +134,8 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
             <version>${nacos.cloud.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.gulingjingguai</groupId>
-            <artifactId>mzp</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
         <!-- nacos end-->
+
     </dependencies>
 
     <build>

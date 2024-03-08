@@ -1,6 +1,7 @@
 package org.gulingjingguai.mzp.lesson.runoob.basicStage;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 public class StringRelationShip {
     /**
