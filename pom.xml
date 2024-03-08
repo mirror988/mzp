@@ -131,6 +131,12 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
             <version>${nacos.cloud.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.gulingjingguai</groupId>
+            <artifactId>mzp</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
         <!-- nacos end-->
     </dependencies>
 
