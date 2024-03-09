@@ -46,4 +46,6 @@ public class UserInfoController {
     public String getName() {
         return commonConfig.getName();
     }
+
+
 }
