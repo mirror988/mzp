@@ -34,6 +34,7 @@
         <koca.boot.thin.layout.version>3.4.0</koca.boot.thin.layout.version>
         <poi.version>3.17</poi.version>
         <spire.version>5.4.3</spire.version>
+        <cglib.version>3.3.0</cglib.version>
     </properties>
 
     <dependencies>
@@ -136,6 +137,13 @@
         </dependency>
         <!-- nacos end-->
 
+        <!-- cglib -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>${cglib.version}</version>
+        </dependency>
+        <!-- cglib -->
     </dependencies>
 
     <build>
