@@ -5,11 +5,11 @@ import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
 
-public class useCglibProxy implements MethodInterceptor {
+public class UseCglibProxy implements MethodInterceptor {
 
     private Object object;
 
-    public useCglibProxy(Object object) {
+    public UseCglibProxy(Object object) {
         this.object = object;
     }
 

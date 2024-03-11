@@ -17,7 +17,7 @@ public class TestProxy {
     public void testCglibProxy(){
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(UserServiceImpl.class);
-        enhancer.setCallback(new useCglibProxy(UserServiceImpl.class));
+        enhancer.setCallback(new UseCglibProxy(UserServiceImpl.class));
         UserServiceImpl userService = (UserServiceImpl)enhancer.create();
         userService.readBook();
         userService.rentingHouse();

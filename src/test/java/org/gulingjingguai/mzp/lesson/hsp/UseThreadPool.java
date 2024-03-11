@@ -2,7 +2,7 @@ package org.gulingjingguai.mzp.lesson.hsp;
 
 import java.util.concurrent.*;
 
-public class useThreadPool {
+public class UseThreadPool {
     public static void main(String[] args) {
         ExecutorService executorService = new ThreadPoolExecutor(3,
                 5,
