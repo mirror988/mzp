@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Proxy;
 
-public class testProxy {
+public class TestProxy {
     @Test
     public void testJdkProxy(){
         UserService userService = (UserService) Proxy.newProxyInstance(UserServiceImpl.class.getClassLoader(), UserServiceImpl.class.getInterfaces(), new UseProxy(new UserServiceImpl()));
