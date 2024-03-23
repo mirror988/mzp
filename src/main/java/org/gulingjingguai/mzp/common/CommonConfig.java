@@ -1,14 +1,13 @@
 package org.gulingjingguai.mzp.common;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 @Component
-@RefreshScope
+//@RefreshScope
 public class CommonConfig {
 
-    @Value(value = "${date}")
+    @Value(value = "${date:}")
     String createDate;
 
     public String getName() {
@@ -19,10 +18,10 @@ public class CommonConfig {
         this.name = name;
     }
 
-    @Value(value = "${time}")
+    @Value(value = "${time:}")
     String time;
 
-    @Value(value = "${name}")
+    @Value(value = "${name:}")
     String name;
 
     public String getTime() {

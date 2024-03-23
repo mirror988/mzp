@@ -36,6 +36,7 @@
         <spire.version>5.4.3</spire.version>
         <cglib.version>3.3.0</cglib.version>
         <loombook.verison>1.18.24</loombook.verison>
+        <redission.verison>3.16.1</redission.verison>
     </properties>
 
     <dependencies>
@@ -125,17 +126,18 @@
 <!--            <version>${nacos.boot.version}</version>-->
 <!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <version>${nacos.cloud.version}</version>
-        </dependency>
+            <!-- 停止服务注册 -->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
+<!--            <version>${nacos.cloud.version}</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${nacos.cloud.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+<!--            <version>${nacos.cloud.version}</version>-->
+<!--        </dependency>-->
         <!-- nacos end-->
 
         <!-- cglib -->
@@ -150,6 +152,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${loombook.verison}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>${redission.verison}</version>
         </dependency>
     </dependencies>
 

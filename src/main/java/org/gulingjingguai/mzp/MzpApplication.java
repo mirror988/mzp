@@ -3,7 +3,6 @@ package org.gulingjingguai.mzp;
 import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
@@ -22,7 +21,7 @@ public class MzpApplication {
     }
 
     @Bean
-    @LoadBalanced
+//    @LoadBalanced
     public RestTemplate restTemplate(){
         return new RestTemplate();
     }
